@@ -19,17 +19,23 @@ public class Taxon {
     @Id
     @GeneratedValue
     private Long id;
+    private String taxonId;
     private String scname;
     private String chname;
 
-    /**
-     * 忽略关系的方向
-     */
     @Relationship(type="Subspecies", direction = Relationship.INCOMING)
     private Set<Taxon> subspecies;
 
-    @Relationship(type = "Evolution", direction = Relationship.INCOMING)
-    public Set<Taxon> evolutions;
+    @Relationship(type = "Genus", direction = Relationship.OUTGOING)
+    public Set<Taxon> genus;
+
+    // 描述
+    @Relationship(type = "Descriptions", direction = Relationship.INCOMING)
+    private Set<Description> descriptions;
+
+    // 别名
+    @Relationship(type = "Aliases", direction = Relationship.INCOMING)
+    private Set<Alias> aliases;
 
     /*
      * 指定亚种关系
@@ -41,10 +47,24 @@ public class Taxon {
         subspecies.add(taxon);
     }
 
-    public void evoWith(Taxon taxon) {
-        if (evolutions == null) {
-            evolutions = new HashSet<>();
+    public void genWith(Taxon taxon) {
+        if (genus == null) {
+            genus = new HashSet<>();
         }
-        evolutions.add(taxon);
+        genus.add(taxon);
+    }
+
+    public void desWith(Description description) {
+        if (descriptions == null) {
+            descriptions = new HashSet<>();
+        }
+        descriptions.add(description);
+    }
+
+    public void aliWith(Alias alias) {
+        if (aliases == null) {
+            aliases = new HashSet<>();
+        }
+        aliases.add(alias);
     }
 }

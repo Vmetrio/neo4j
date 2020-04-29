@@ -10,7 +10,12 @@ public interface TaxonRepository extends CrudRepository<Taxon, Long> {
 
     Taxon findByScname(String scname);
 
+    Taxon findByTaxonId(String taxonId);
+
     @Query("match data=(t1:Taxon{scname:{0}})<-[*0..1]-(t2:Taxon) return data")
-    List<Taxon> findTaxonDepth(String scname);
+    List<Taxon> findTaxonDepthIn(String scname);
+
+    @Query("match data=(t1:Taxon{scname:{0}})-[*0..1]->(t2:Taxon) return data")
+    List<Taxon> findTaxonDepthOut(String scname);
 
 }
