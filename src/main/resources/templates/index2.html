@@ -1,14 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>ECharts 关系图</title>
     <script src="jquery/jquery.js"></script>
     <!-- echarts-3.1.10 -->
     <script src="plugins/echarts/echarts.min.js"></script>
+    <!-- Layer 3.0.1 -->
+    <script th:src="@{/plugins/layer/layer.js}" src="plugins/layer/laye.js"></script>
 </head>
 
 <body>
-<div id="main" style="width:1000px;height:800px"></div>
+<section class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="main" style="width:100%;height:800px"></div>
+        </div>
+    </div>
+</section>
+<!-- Layer 3.0.1 -->
+<script th:src="@{/plugins/layer/layer.js}" src="plugins/layer/laye.js"></script>
+<script type="text/javascript">
+    function SeeInfo(infoId) {
+        var width = $(window).width();
+        var layer_width = "30%";
+        var layer_height = "30%";
+        if (width > 760) {
+            layer_width = "300px";
+            layer_height = "550px";
+        }
+        layer.open({
+            offset: 'lt',
+            anim: 4,
+            type : 2,
+            title : '<label class="form-label">物种信息</label>',
+            fixed : false, // 不固定
+            area : [ layer_width, layer_height ],
+            content : '/info/' + infoId
+        });
+    };
+
+    function SearchSpecies() {
+        var width = $(window).width();
+        var layer_width = "50%";
+        var layer_height = "50%";
+        if (width > 760) {
+            layer_width = "550px";
+            layer_height = "550px";
+        }
+        layer.open({
+            type : 2,
+            title : '<label class="form-label">搜索</label>',
+            fixed : false, // 不固定
+            area : [ layer_width, layer_height ],
+            content : '/search'
+        });
+    };
+</script>
+
 <script type="text/javascript">
     var myChart = echarts.init(document.getElementById('main'));
     var categories = [];
@@ -35,6 +84,15 @@
             feature: {
                 mark: {
                     show: true
+                },
+                mySearch: {
+                    show : true,
+                    title : '搜索',
+                    //icon : 'image://',
+                    icon : 'image://data:image/png;base64,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',
+                    onclick: function() {
+                        SearchSpecies();
+                    }
                 },
                 // 还原
                 restore: {
@@ -96,31 +154,31 @@
             data: [{
                 name: 'node01',
                 des: 'nodedes01',
-                url: 'http://baike.especies.cn/',
+                dataId: '1',
                 symbolSize: 70,
                 category: 0,
             }, {
                 name: 'node02',
                 des: 'nodedes02',
-                url: 'http://baike.especies.cn/',
+                dataId: '1',
                 symbolSize: 50,
                 category: 1,
             }, {
                 name: 'node03',
                 des: 'nodedes3',
-                url: 'http://baike.especies.cn/',
+                dataId: '1',
                 symbolSize: 50,
                 category: 1,
             }, {
                 name: 'node04',
                 des: 'nodedes04',
-                url: 'http://baike.especies.cn/',
+                dataId: '1',
                 symbolSize: 50,
                 category: 1,
             }, {
                 name: 'node05',
                 des: 'nodedes05',
-                url: 'http://baike.especies.cn/',
+                dataId: '1',
                 symbolSize: 50,
                 category: 1,
             }],
@@ -149,20 +207,15 @@
         }]
     };
     myChart.setOption(option);
-    myChart.on('click', function (param){
+    myChart.on('dblclick', function (param){
         console.log('param---->', param);  // 打印出param, 可以看到里边有很多参数可以使用
         //获取节点点击的数组序号
         var arrayIndex = param.dataIndex;
         console.log('arrayIndex---->', arrayIndex);
         console.log('name---->', param.name);
-        console.log('url---->', param.data.url);
+        console.log('url---->', param.data.dataId);
         if (param.dataType == 'node') {
-            var r=confirm("是否跳转到："+param.data.url);
-            if (r==true){
-                window.open(param.data.url);
-            }
-        } else {
-            alert("点击了边" + param.value)
+            SeeInfo(param.data.dataId);
         }
     });
 </script>
