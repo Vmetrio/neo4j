@@ -2,10 +2,31 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>详情</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="description" content=""/>
+    <th:block th:replace="pageFrame/basicsCss :: copy"/>
 </head>
 
 <body>
-    <span>物种详情</span>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <br>
+        <img th:src="@{http://file.especies.cn/images/bird/2019/542/87.jpg}" width="100%" height="200">
+        <p></p>
+        <div class="form-group">
+            <p><label class="control-label">云雀</label></p>
+            <p><label class="control-label">Alauda arvensis</label></p>
+            <p><label class="control-label">中等体型(18厘米)而具灰褐色杂斑的百灵。顶冠及耸起的羽冠具细纹，
+                尾分叉，羽缘白色，后翼缘的白色于飞行时可见。与鹨类的区别在尾及腿均较短...</label></p>
+        </div>
+        <div align="right">
+            <button type="button" class="btn btn-success" onclick="Info()">查看详情</button>
+        </div>
+    </div>
+
+<!-- 引入js【body末尾引入js文件会使页面加载更快】 -->
+<th:block th:replace="pageFrame/basicsJs :: copy"/>
 </body>
 </html>

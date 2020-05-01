@@ -1,0 +1,15 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="copy">
+    <!-- jQuery 3 -->
+    <script th:src="@{jquery/jquery.min.js}" src="/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script th:src="@{plugins/bootstrap/js/bootstrap.min.js}"
+            src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        //初始化组件
+        $(document).ready(function () {
+        });
+    </script>
+</th:block>
+</html>

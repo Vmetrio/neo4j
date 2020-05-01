@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class IndexController {
 
@@ -13,7 +15,7 @@ public class IndexController {
     }
 
     @GetMapping("/index")
-    public String Index2(){
+    public String Index2(HttpServletRequest request){
         return "index2";
     }
 
@@ -26,6 +28,14 @@ public class IndexController {
     @GetMapping("/search")
     public String Search(){
         return "search";
+    }
+
+    @GetMapping("/search/{species}/{depth}")
+    public String SearchIndex(@PathVariable("species") String species,
+                              @PathVariable("depth") String depth){
+        System.out.println(species);
+        System.out.println(depth);
+        return "index2";
     }
 
 }

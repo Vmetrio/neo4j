@@ -2,7 +2,9 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>ECharts 关系图</title>
+    <title>生物图谱</title>
+    <!-- Base href -->
+    <base th:href="@{/}"/>
     <script src="jquery/jquery.js"></script>
     <!-- echarts-3.1.10 -->
     <script src="plugins/echarts/echarts.min.js"></script>
@@ -11,13 +13,7 @@
 </head>
 
 <body>
-<section class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="main" style="width:100%;height:800px"></div>
-        </div>
-    </div>
-</section>
+    <div id="main" style="width:100%;height:800px"></div>
 <!-- Layer 3.0.1 -->
 <script th:src="@{/plugins/layer/layer.js}" src="plugins/layer/laye.js"></script>
 <script type="text/javascript">
@@ -27,7 +23,7 @@
         var layer_height = "30%";
         if (width > 760) {
             layer_width = "300px";
-            layer_height = "550px";
+            layer_height = "500px";
         }
         layer.open({
             offset: 'lt',
@@ -42,15 +38,17 @@
 
     function SearchSpecies() {
         var width = $(window).width();
-        var layer_width = "50%";
-        var layer_height = "50%";
+        var layer_width = "30%";
+        var layer_height = "30%";
         if (width > 760) {
-            layer_width = "550px";
-            layer_height = "550px";
+            layer_width = "300px";
+            layer_height = "230px";
         }
         layer.open({
+            offset: 'rt',
+            anim: 1,
             type : 2,
-            title : '<label class="form-label">搜索</label>',
+            title : '<label class="form-label">物种搜索</label>',
             fixed : false, // 不固定
             area : [ layer_width, layer_height ],
             content : '/search'
@@ -69,7 +67,7 @@
     option = {
         // 图的标题
         title: {
-            text: 'ECharts 关系图'
+            text: '生物图谱'
         },
         // 提示框的配置
         tooltip: {
