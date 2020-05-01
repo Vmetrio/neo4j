@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -143,6 +144,43 @@ public class EchartsDataController {
         Set<Nodes> userSet = new HashSet<>(nodes);
         List<Nodes> list = new ArrayList<>(userSet);
         //list.forEach(System.out::println);
+
+        echartsData.setNodes(list);
+        echartsData.setLinks(links);
+
+        return echartsData;
+    }
+
+    @PostMapping("/data/species")
+    public EchartsData EchartsData(HttpServletRequest request) {
+        String species = request.getParameter("species");
+        String depth = request.getParameter("depth");
+        System.out.println(species);
+        System.out.println(depth);
+
+        EchartsData echartsData = new EchartsData();
+        List<Nodes> nodes =new ArrayList<Nodes>();
+        Nodes node1 = new Nodes();
+        Nodes node2 = new Nodes();
+        Nodes node3 = new Nodes();
+        node1.setName("云雀");
+        node2.setName("小云雀");
+        nodes.add(node1);
+        nodes.add(node2);
+        List<Links> links = new ArrayList<Links>();
+        Links link1 = new Links();
+        Links link2 = new Links();
+        link1.setName("云雀属");
+        link1.setSource("小云雀");
+        link1.setTarget("云雀");
+        links.add(link1);
+        links.add(link2);
+
+        echartsData.setNodes(nodes);
+        echartsData.setLinks(links);
+
+        Set<Nodes> userSet = new HashSet<>(nodes);
+        List<Nodes> list = new ArrayList<>(userSet);
 
         echartsData.setNodes(list);
         echartsData.setLinks(links);

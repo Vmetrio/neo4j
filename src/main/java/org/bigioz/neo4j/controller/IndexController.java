@@ -1,6 +1,7 @@
 package org.bigioz.neo4j.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -22,20 +23,20 @@ public class IndexController {
     @GetMapping("/info/{dataId}")
     public String Info(@PathVariable("dataId") String dataId){
         System.out.println(dataId);
-        return "info";
+        return "taxon/info";
     }
 
     @GetMapping("/search")
     public String Search(){
-        return "search";
+        return "taxon/search";
     }
 
     @GetMapping("/search/{species}/{depth}")
-    public String SearchIndex(@PathVariable("species") String species,
+    public String SearchIndex(Model model, @PathVariable("species") String species,
                               @PathVariable("depth") String depth){
-        System.out.println(species);
-        System.out.println(depth);
-        return "index2";
+        model.addAttribute("species", species);
+        model.addAttribute("depth", depth);
+        return "taxon/speciesDepth";
     }
 
 }
