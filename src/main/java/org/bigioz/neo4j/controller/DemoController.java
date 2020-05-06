@@ -82,7 +82,8 @@ public class DemoController {
 
     @GetMapping("/taxon/depth")
     public List<Taxon> TaxonDepth(){
-        List<Taxon> taxon = taxonRepository.findTaxonDepthIn("Alauda arvensis");
+        //List<Taxon> taxon = taxonRepository.findTaxonDepthInOne("Alauda arvensis");
+        List<Taxon> taxon = taxonRepository.findTaxonDepthInTwo("Alauda arvensis");
         return taxon;
     }
 

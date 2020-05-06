@@ -155,26 +155,70 @@ public class EchartsDataController {
     public EchartsData EchartsData(HttpServletRequest request) {
         String species = request.getParameter("species");
         String depth = request.getParameter("depth");
-        System.out.println(species);
-        System.out.println(depth);
 
         EchartsData echartsData = new EchartsData();
         List<Nodes> nodes =new ArrayList<Nodes>();
-        Nodes node1 = new Nodes();
-        Nodes node2 = new Nodes();
-        Nodes node3 = new Nodes();
-        node1.setName("云雀");
-        node2.setName("小云雀");
-        nodes.add(node1);
-        nodes.add(node2);
         List<Links> links = new ArrayList<Links>();
-        Links link1 = new Links();
-        Links link2 = new Links();
-        link1.setName("云雀属");
-        link1.setSource("小云雀");
-        link1.setTarget("云雀");
-        links.add(link1);
-        links.add(link2);
+        List<Taxon> taxonList = new ArrayList<Taxon>();
+
+        if("1".equals(depth)){
+            taxonList = taxonRepository.findTaxonDepthInOne(species);
+        }else{
+            taxonList = taxonRepository.findTaxonDepthInTwo(species);
+        }
+
+        if (!taxonList.isEmpty()){
+            //Taxon taxon = taxonList.get(0);
+            for (Taxon taxon : taxonList) {
+                // 节点
+                Nodes taxonNode = new Nodes();
+                taxonNode.setName(taxon.getChname());
+                taxonNode.setDes(taxon.getScname());
+                taxonNode.setCategory(0);
+                taxonNode.setSymbolSize(60);
+                nodes.add(taxonNode);
+
+                Taxon taxonNow = taxonRepository.findByScname(taxon.getScname());
+                if(taxonNow.getSubspecies() != null){
+                    Set<Taxon> subspecies = taxonNow.getSubspecies();
+                    for (Taxon subspecie : subspecies) {
+                        // 节点
+                        Nodes node = new Nodes();
+                        node.setName(subspecie.getChname());
+                        node.setDes(subspecie.getScname());
+                        node.setCategory(1);
+                        node.setSymbolSize(50);
+                        nodes.add(node);
+                        // 关系
+                        Links link = new Links();
+                        link.setSource(subspecie.getChname());
+                        link.setName("亚种");
+                        link.setTarget(taxon.getChname());
+                        links.add(link);
+                    }
+                }
+
+                if(taxonNow.getGenus() != null){
+                    Set<Taxon> evolutions = taxonNow.getGenus();
+                    for (Taxon evolution : evolutions) {
+                        // 节点
+                        Nodes node = new Nodes();
+                        node.setName(evolution.getChname());
+                        node.setDes(evolution.getScname());
+                        node.setCategory(0);
+                        node.setSymbolSize(60);
+                        nodes.add(node);
+                        // 关系
+                        Links link = new Links();
+                        link.setSource(taxon.getChname());
+                        link.setName("云雀属");
+                        link.setTarget(evolution.getChname());
+                        links.add(link);
+                    }
+                }
+            }
+
+        }
 
         echartsData.setNodes(nodes);
         echartsData.setLinks(links);

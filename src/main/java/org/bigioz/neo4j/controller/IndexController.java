@@ -22,7 +22,7 @@ public class IndexController {
 
     @GetMapping("/info/{dataId}")
     public String Info(@PathVariable("dataId") String dataId){
-        System.out.println(dataId);
+        //System.out.println(dataId);
         return "taxon/info";
     }
 
